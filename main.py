@@ -29,8 +29,18 @@ d1 = Entry(window, textvariable= contact_var).grid(row = 3,column = 1)
 column_name = ("Fullname", "Email Address", "Phone Number")
 treeviews = ttk.Treeview(window)
 treeviews.configure(columns=column_name)
-
+treeviews.heading("#0", text="Membership")
+treeviews.heading("Fullname", text="Fullname")
+treeviews.heading("Email Address", text="Email Address")
+treeviews.heading("Phone Number", text="Phone Number")
 treeviews.grid(row=5, column=1)
+
+treeviews.column("#0", anchor=CENTER)
+treeviews.column("Fullname", anchor=CENTER)
+treeviews.column("Email Address", anchor=CENTER)
+treeviews.column("Phone Number", anchor=CENTER)
+treeviews.insert('', 0, 'Fullname', text='Yes', values=("Luis Abreu", "luis1abreu@gmail.com", "3476616555"))
+treeviews.insert('', 0, 'test', text='Yes', values=("ASbreu", "luis@gmail.com", "34763433555"))
 
 
 def submit():
