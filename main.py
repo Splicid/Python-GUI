@@ -39,8 +39,6 @@ treeviews.column("#0", anchor=CENTER)
 treeviews.column("Fullname", anchor=CENTER)
 treeviews.column("Email Address", anchor=CENTER)
 treeviews.column("Phone Number", anchor=CENTER)
-treeviews.insert('', 0, 'Fullname', text='Yes', values=("Luis Abreu", "luis1abreu@gmail.com", "3476616555"))
-treeviews.insert('', 0, 'test', text='Yes', values=("ASbreu", "luis@gmail.com", "34763433555"))
 
 
 def submit():
@@ -49,13 +47,17 @@ def submit():
     email = email_var.get()
     contact = contact_var.get()
 
+    
+        
     item_2 = {
-      "_id" : "U1IT00022",
       "Name" : first + " " + last,
       "email" : email,
       "Contact" : contact,
    }
     collection_name.insert_one(item_2)
+    item_details = collection_name.find()
+    for item in item_details:
+      treeviews.insert('', 'end', text='Yes', values=(item['Name'], item['email'], item['Contact']))
 
 button = Button(window, text="Hello", command=(submit))
 button.grid(row=4, column=0)
