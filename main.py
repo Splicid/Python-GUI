@@ -5,6 +5,7 @@ from pymongo_get_database import get_database
 dbname = get_database()
 collection_name = dbname["items"]
 
+
 window = Tk()
 window.title(" Database builder ")
 window.geometry('1000x400')
