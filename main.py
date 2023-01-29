@@ -1,3 +1,4 @@
+import re
 from tkinter import *
 from tkinter import ttk
 from pymongo_get_database import get_database
@@ -7,7 +8,7 @@ collection_name = dbname["items"]
 
 
 window = Tk()
-window.title(" Database builder ")
+window.title("Inserting Data :)")
 window.geometry('1000x400')
 window.configure(background = "white");
 
@@ -41,24 +42,37 @@ treeviews.column("Fullname", anchor=CENTER)
 treeviews.column("Email Address", anchor=CENTER)
 treeviews.column("Phone Number", anchor=CENTER)
 
-
 def submit():
+  regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+  try:
+    #Gets information from treeviews form
     first = fist_var.get()
     last = last_var.get()
     email = email_var.get()
     contact = contact_var.get()
 
-    
-        
-    item_2 = {
-      "Name" : first + " " + last,
-      "email" : email,
-      "Contact" : contact,
-   }
-    collection_name.insert_one(item_2)
-    item_details = collection_name.find()
-    for item in item_details:
-      treeviews.insert('', 'end', text='Yes', values=(item['Name'], item['email'], item['Contact']))
+    #checks if the form has a valid email if not info will not be inserted
+    if(re.fullmatch(regex, email)):
+      print("valid Email")
+      item_2 = {
+        "Name" : first + " " + last,
+        "email" : email,
+        "Contact" : contact
+      }
+      db_insert(item_2)
+    else:
+      print("Invalid Email")
+  except Exception as err:
+    print(err)
+
+def db_insert(item_2):
+  collection_name.insert_one(item_2)
+  item_details = collection_name.find()
+  for item in item_details:
+    treeviews.insert('', 'end', text='Yes', values=(item['Name'], item['email'], item['Contact']))
+
+def db_delete():
+  pass
 
 button = Button(window, text="Hello", command=(submit))
 button.grid(row=4, column=0)
